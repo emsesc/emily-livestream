@@ -15,9 +15,13 @@ module.exports = async function (context, req) {
     let objects = Object.values(emotions)
     const main_emotion = Object.keys(emotions).find(key => emotions[key] === Math.max(...objects))
 
+    const apiResult = await fetch ("https://api.giphy.com/v1/gifs/translate?s=" + main_emotion + "&api_key=your_key&limit=1");
+    const jsonResult = await apiResult.json();
     context.res = {
-        body: main_emotion
+        // status: 200, /* Defaults to 200 */
+        body: jsonResult.data.url
     };
+
     console.log(result)
     context.done(); 
 };
