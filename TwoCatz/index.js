@@ -15,12 +15,24 @@ module.exports = async function (context, req) {
         return data
     }
 
-    let cat = await getCatPic()
+    function getNames() {
+        var names = ["Shreya", "Emily", "Fifi", "Beau", "Evelyn", "Julia", "Daniel", "Fardeen"]
+        var random_value = Math.floor(names.length * Math.random())
+        var resultname = names[random_value]
+        return resultname
+    }
+
+    let firstcat = await getCatPic()
+    let secondcat = await getCatPic()
+    let name1 = getNames()
+    let name2 = getNames()
  
     context.res = {
         // status: 200, /* Defaults to 200 */
         body: {
-            cat
+            cat1: firstcat,
+            cat2: secondcat,
+            names: [name1, name2]
         }
     };
 }
