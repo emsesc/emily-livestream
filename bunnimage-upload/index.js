@@ -4,22 +4,31 @@ const { BlobServiceClient } = require("@azure/storage-blob");
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
-    var boundary = multipart.getBoundary(req.headers['content-type']);
     var body = req.body;
-    var parsedBody = multipart.Parse(body, boundary);
-    context.log(parsedBody);
     
-    var filetype = parsedBody[0].type;
-    if (filetype == "image/png") {
-        ext = "png";
-    } else if (filetype == "image/jpeg") {
-        ext = "jpeg";
+    var responseMessage = ""
+    if (body == "" || body == undefined) {
+        responseMessage = "Sorry! No image attached."
     } else {
-        username = "invalidimage"
-        ext = "";
+        var password = req.headers['codename']
+        var boundary = multipart.getBoundary(req.headers['content-type']);
+        var parsedBody = multipart.Parse(body, boundary);
+
+        var filetype = parsedBody[0].type;
+        var ext = ""
+        if (filetype == "image/png") {
+            ext = "png";
+        } else if (filetype == "image/jpeg") {
+            ext = "jpeg";
+        } else {
+            username = "invalidimage"
+            ext = "";
+        }
+
+        responseMessage = await uploadFile(parsedBody, ext, password);
     }
 
-    var responseMessage = await uploadFile(parsedBody, ext);
+    var responseMessage = await uploadFile(parsedBody, ext, filename);
     context.res = {
         body: responseMessage
     };
@@ -38,7 +47,7 @@ async function uploadFile(parsedBody, ext){
     const containerClient = blobServiceClient.getContainerClient(containerName);
     
     // Create the container
-    const blobName = 'test' + "." + ext;
+    const blobName = filename + "." + ext;
 
     // Get a block blob client
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
