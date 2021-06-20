@@ -1,7 +1,7 @@
 # [Replace this with your project title]
 
 ## About Me
-Hi
+
 ## The Premise
 
 ## Tools used
