@@ -28,7 +28,6 @@ module.exports = async function (context, req) {
         responseMessage = await uploadFile(parsedBody, ext, password);
     }
 
-    var responseMessage = await uploadFile(parsedBody, ext, filename);
     context.res = {
         body: responseMessage
     };
