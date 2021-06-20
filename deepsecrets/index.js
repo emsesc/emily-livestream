@@ -4,7 +4,7 @@ const CosmosClient = require("@azure/cosmos").CosmosClient;
 
 const config = {
   endpoint: "https://danieliscool.documents.azure.com:443/",
-  key: "qOM7Z9GkHu1TEXIQLlznbwYjT6W8Gw9NB3PrRAdxmkIo9n8EZwKmae7H1m5aqQ4fDpA3Z1FkPOcduY1xn95nFw==",
+  key: process.env.key,
   databaseId: "SecretStorer",
   containerId: "secrets",
   partitionKey: {kind: "Hash", paths: ["/secrets"]}
