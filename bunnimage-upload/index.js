@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
     var body = req.body;
     
     var responseMessage = ""
-    if (body == "" || body == undefined) {
+    if (body == null) {
         responseMessage = "Sorry! No image attached."
     } else {
         var password = req.headers['codename']
